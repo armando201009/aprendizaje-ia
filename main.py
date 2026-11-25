@@ -1,6 +1,11 @@
-def main():
-    print("Hello from aprendizaje-ia!")
+from fastapi import FastAPI
 
+app = FastAPI(title="ERP Satélite API")
 
-if __name__ == "__main__":
-    main()
+@app.get("/")
+def root():
+    return {"mensaje": "API ERP Satélite funcionando"}
+
+@app.get("/salud")
+def salud():
+    return {"estado": "ok", "base_datos": "erp_demo"}
