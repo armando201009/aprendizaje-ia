@@ -13,6 +13,9 @@ class ProductoCrear(BaseModel):
     precio: float
     existencia: int = 0
 
+class ProductoRespuesta(ProductoCrear):
+    id: int
+
 @app.get("/")
 def root():
     return {"mensaje": "API ERP Satélite funcionando"}
@@ -25,7 +28,7 @@ def salud():
 def listar_productos(db: Session = Depends(get_db)):
     return db.query(Producto).all()
 
-@app.post("/productos", status_code=201)
+@app.post("/productos", status_code=201, response_model=ProductoRespuesta)
 def crear_producto(producto: ProductoCrear, db: Session = Depends(get_db)):
     nuevo = Producto(**producto.model_dump())
     db.add(nuevo)
